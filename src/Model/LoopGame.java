@@ -64,7 +64,7 @@ public class LoopGame extends AnimationTimer{
         this.jugador3 = new Image ("Images/Left1.png");
         this.jugador4 = new Image ("Images/Left2.png");
         this.bullet1 = new Image("Images/Bullet1.png");
-        this.wall = new Pared(900, 900, 200, 200, new Image("Images/Muro.png"));
+        this.wall = new Pared(900, 900, 200, 200, new Image("Images/Muro2.png"));
         teclado = new ArrayList<>();
         
         escena.setOnKeyPressed(
