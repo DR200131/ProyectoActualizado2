@@ -6,6 +6,7 @@
 package Model;
 
 import javafx.scene.image.*;
+import javafx.scene.shape.Shape;
 
 /**
  *
@@ -15,8 +16,8 @@ public class Bullet extends Entidad{
     
     public int vbx;
     
-    public Bullet(int xref, int yref, int ancho, int alto) {
-        super(xref, yref, ancho, alto);
+    public Bullet(int xref, int yref, int ancho, int alto, Image skin, Shape coli) {
+        super(xref, yref, ancho, alto, skin, coli);
     }
     
     public void dispararDerecha(){

@@ -5,11 +5,16 @@
  */
 package Model;
 
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.scene.paint.Color;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
@@ -37,8 +42,10 @@ public class LoopInicio{
         this.vbox.getChildren().add(this.biniciar);
         this.vbox.getChildren().add(this.bsalir);
         this.vbox.setAlignment(Pos.CENTER);
+        this.vbox.setSpacing(50);
         this.layout.getChildren().add(this.vbox);
         this.escena = new Scene(layout, 1200, 700);
+        this.bsalir.setOnMouseClicked(new EventoMouse2());
     }
 
     public Button getBiniciar() {
@@ -52,10 +59,20 @@ public class LoopInicio{
     public void mostrar(Stage stage){
         stage.setTitle("Sancocho's Revolution");
         stage.setScene(this.escena);
+        stage.setMaxHeight(700);
+        stage.setMaxWidth(1200);
         stage.show();
     }
     
     
+    
+    class EventoMouse2 implements EventHandler<MouseEvent>{
+        @Override
+        public void handle(MouseEvent t) {
+            System.exit(0);
+        }
+        
+    }
     
     
 }

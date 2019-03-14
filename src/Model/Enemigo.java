@@ -6,6 +6,7 @@
 package Model;
 
 import javafx.scene.image.*;
+import javafx.scene.shape.Shape;
 
 /**
  *
@@ -13,8 +14,8 @@ import javafx.scene.image.*;
  */
 public class Enemigo extends Entidad{
     
-    public Enemigo(int xref, int yref, int ancho, int alto) {
-        super(xref, yref, ancho, alto);
+    public Enemigo(int xref, int yref, int ancho, int alto, Image skin, Shape coli) {
+        super(xref, yref, ancho, alto, skin, coli);
     }
     
     

@@ -6,6 +6,7 @@
 package Model;
 
 import javafx.scene.image.*;
+import javafx.scene.shape.Shape;
 
 /**
  *
@@ -21,12 +22,16 @@ public class Entidad {
     public boolean caer = false;
     public boolean saltar = false;
     public double gravedad = 0.0;
+    public Image skin;
+    public Shape coli;
 
-    public Entidad(int xref, int yref, int ancho, int alto) {
+    public Entidad(int xref, int yref, int ancho, int alto, Image skin, Shape coli) {
         this.xref = xref;
         this.yref = yref;
         this.ancho = ancho;
         this.alto = alto;
+        this.skin = skin;
+        this.coli = coli;
     }
 
     public int getXref() {

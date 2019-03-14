@@ -5,6 +5,7 @@
  */
 package Model;
 
+import com.sun.prism.paint.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -17,6 +18,7 @@ import javafx.scene.image.*;
 import javafx.scene.input.*;
 import javafx.scene.shape.*;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 
 /**
@@ -44,14 +46,17 @@ public class LoopGame extends AnimationTimer{
     private Pared wall;
     private boolean disparo = false;
     private boolean life = true;
+    private Shape colip;
+    private Shape colie;
+    private Shape colib;
     
     private ArrayList<String> teclado;
 
     public LoopGame(Scene escena, GraphicsContext pen) {
         this.escena = escena;
         this.pen = pen;
-        this.e1 = new Enemigo(900, 400, 80, 100);
-        this.p1 = new Player(0, 400, 80, 130);
+        this.e1 = new Enemigo(900, 400, 80, 100,Enemy, this.colie = new Rectangle(900, 400, 80, 100));
+        this.p1 = new Player(0, 400, 80, 130, jugador1, this.colip = new Rectangle(0, 400, 80, 130));
         this.Enemy = new Image ("Images/Enemy.gif");
         this.fondo = new Image("Images/Fondo.png");
         this.jugador1 = new Image ("Images/Right1.png");
@@ -59,7 +64,7 @@ public class LoopGame extends AnimationTimer{
         this.jugador3 = new Image ("Images/Left1.png");
         this.jugador4 = new Image ("Images/Left2.png");
         this.bullet1 = new Image("Images/Bullet1.png");
-        this.wall = new Pared(900, 900, 200, 200);
+        this.wall = new Pared(900, 900, 200, 200, new Image("Images/Muro.png"));
         teclado = new ArrayList<>();
         
         escena.setOnKeyPressed(
@@ -101,7 +106,7 @@ public class LoopGame extends AnimationTimer{
                 }
               }
             });
-        this.bul = new Bullet(p1.xref, p1.yref + 60, 25, 25);
+        this.bul = new Bullet(p1.xref + 60, p1.yref + 60, 25, 25, bullet1, this.colib = new Rectangle(p1.xref + 60, p1.yref + 60, 25, 25));
     }
 
     @Override
@@ -117,7 +122,11 @@ public class LoopGame extends AnimationTimer{
                 this.secuencia++;
             }
         }
-        pen.drawImage(this.fondo, 0 , 0, 1200 + p1.getXref() , 700 + p1.getYref());
+        pen.drawImage(this.fondo, 0 , 0, 1200, 700);
+        
+        if(life){
+            pen.drawImage(e1.skin, 247*secuencia, 0, 247, 300, e1.getXref(), e1.getYref(), e1.getAncho(), e1.getAlto());
+        }
         
         
         
@@ -184,22 +193,15 @@ public class LoopGame extends AnimationTimer{
             }
         }
         
-        if(disparo == true){
-            pen.drawImage(this.bullet1, bul.getXref(), bul.getYref(), bul.getAncho(), bul.getAlto());
+        if(disparo){
+            pen.drawImage(bul.skin, bul.getXref(), bul.getYref(), bul.getAncho(), bul.getAlto());
             bul.setVbx(5);
             bul.xref += bul.vbx; 
         }
         
-        if(life){
-            pen.drawImage(this.Enemy, 247*secuencia, 0, 247, 300, e1.getXref(), e1.getYref(), e1.getAncho(), e1.getAlto());
-        }
         
-        Shape sPlayer = new Rectangle(p1.getXref(), p1.getYref(), p1.getAncho(), p1.getAlto());
-        Shape sWall = new Rectangle(wall.getX(), wall.getY(), wall.getAncho(), wall.getAlto());
-        Shape sBullet = new Rectangle(bul.getXref(), bul.getYref(), bul.getAncho(), bul.getAlto());
-        Shape sEnemy = new Rectangle(e1.getXref(), e1.yref, e1.getAncho(), e1.getAlto());
         
-        Shape Interseccion = SVGPath.intersect(sBullet, sEnemy);
+        Shape Interseccion = SVGPath.intersect(colib, colie);
         
         if(Interseccion.getBoundsInLocal().getWidth() != -1){
            life = false;
@@ -212,6 +214,7 @@ public class LoopGame extends AnimationTimer{
         pen.setFont(new Font(25));
         
         
+        
         this.numero++;
-    }    
+    }
 }
