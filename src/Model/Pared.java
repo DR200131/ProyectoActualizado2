@@ -33,6 +33,4 @@ public class Pared {
     public int getAlto() {
         return alto;
     }
-    
-    
 }

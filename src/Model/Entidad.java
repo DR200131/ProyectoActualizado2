@@ -19,7 +19,8 @@ public class Entidad {
     public int ancho;
     public int alto;
     public boolean caer = false;
-    public boolean gravedad = false;
+    public boolean saltar = false;
+    public double gravedad = 0.0;
 
     public Entidad(int xref, int yref, int ancho, int alto) {
         this.xref = xref;

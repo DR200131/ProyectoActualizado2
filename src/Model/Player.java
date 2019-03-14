@@ -5,7 +5,6 @@
  */
 package Model;
 
-import javafx.scene.image.*;
 
 /**
  *
@@ -31,5 +30,20 @@ public class Player extends Entidad{
 
     public int getAlto() {
         return alto;
+    }
+    
+    public void salto(){
+        if(saltar){
+            gravedad -= 0.1;
+            this.setYv((int)-gravedad);
+            if(gravedad <= 0.0){
+                saltar = false;
+                caer = true;
+            }
+        }
+        if(caer){
+            gravedad += 0.1;
+            this.setYv((int)-gravedad);
+        }
     }
 }

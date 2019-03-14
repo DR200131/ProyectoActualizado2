@@ -5,6 +5,9 @@
  */
 package Model;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 import javafx.animation.*;
 import javafx.event.*;
@@ -14,6 +17,7 @@ import javafx.scene.image.*;
 import javafx.scene.input.*;
 import javafx.scene.shape.*;
 import javafx.scene.text.Font;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -50,11 +54,12 @@ public class LoopGame extends AnimationTimer{
         this.p1 = new Player(0, 400, 80, 130);
         this.Enemy = new Image ("Images/Enemy.gif");
         this.fondo = new Image("Images/Fondo.png");
-        this.jugador1 = new Image ("Images/Rigth1.png");
-        this.jugador2 = new Image ("Images/Rigth2.png");
+        this.jugador1 = new Image ("Images/Right1.png");
+        this.jugador2 = new Image ("Images/Right2.png");
         this.jugador3 = new Image ("Images/Left1.png");
         this.jugador4 = new Image ("Images/Left2.png");
         this.bullet1 = new Image("Images/Bullet1.png");
+        this.wall = new Pared(900, 900, 200, 200);
         teclado = new ArrayList<>();
         
         escena.setOnKeyPressed(
@@ -98,7 +103,7 @@ public class LoopGame extends AnimationTimer{
             });
         this.bul = new Bullet(p1.xref, p1.yref + 60, 25, 25);
     }
-    
+
     @Override
     
     public void handle (long now){
@@ -112,7 +117,7 @@ public class LoopGame extends AnimationTimer{
                 this.secuencia++;
             }
         }
-        pen.drawImage(this.fondo, 0, 0, 1200, 700);
+        pen.drawImage(this.fondo, 0 , 0, 1200 + p1.getXref() , 700 + p1.getYref());
         
         
         
@@ -157,7 +162,9 @@ public class LoopGame extends AnimationTimer{
             }
         }
         if(teclado.contains("UP") || teclado.contains("W")){
-            if(p1.getYref()!= 0){
+            if(!p1.saltar){
+                p1.saltar = true;
+                p1.gravedad = 10.0;
                 mov = 0;
                 p1.setYv(-5);
                 p1.yref += p1.yv;
@@ -179,7 +186,6 @@ public class LoopGame extends AnimationTimer{
         
         if(disparo == true){
             pen.drawImage(this.bullet1, bul.getXref(), bul.getYref(), bul.getAncho(), bul.getAlto());
-            bul.dispararDerecha();
             bul.setVbx(5);
             bul.xref += bul.vbx; 
         }
@@ -189,6 +195,7 @@ public class LoopGame extends AnimationTimer{
         }
         
         Shape sPlayer = new Rectangle(p1.getXref(), p1.getYref(), p1.getAncho(), p1.getAlto());
+        Shape sWall = new Rectangle(wall.getX(), wall.getY(), wall.getAncho(), wall.getAlto());
         Shape sBullet = new Rectangle(bul.getXref(), bul.getYref(), bul.getAncho(), bul.getAlto());
         Shape sEnemy = new Rectangle(e1.getXref(), e1.yref, e1.getAncho(), e1.getAlto());
         
@@ -200,14 +207,11 @@ public class LoopGame extends AnimationTimer{
            puntaje += 100;
            bullet1 = null;
         }
-        
-        
-        
+ 
         pen.fillText("Puntaje: " + puntaje, 1000, 30);
         pen.setFont(new Font(25));
         
         
         this.numero++;
-    }
-    
+    }    
 }
